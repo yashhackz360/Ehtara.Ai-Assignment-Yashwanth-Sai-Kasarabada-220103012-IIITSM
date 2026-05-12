@@ -98,7 +98,11 @@ function ProjectDetail() {
   const getAvatarColor = (n) => { const c = ['#6366f1','#8b5cf6','#ec4899','#06b6d4','#f59e0b','#10b981','#f43f5e','#3b82f6']; let h=0; for(let i=0;i<n.length;i++) h=n.charCodeAt(i)+((h<<5)-h); return c[Math.abs(h)%c.length]; };
   const formatDate = (d) => d ? new Date(d).toLocaleDateString('en-US',{month:'short',day:'numeric'}) : '';
   const isOverdue = (t) => t.dueDate && new Date(t.dueDate) < new Date() && t.status !== 'done';
-  const columns = [{ key:'todo', label:'To Do', color:'#94a3b8' },{ key:'in-progress', label:'In Progress', color:'#6366f1' },{ key:'done', label:'Done', color:'#22c55e' }];
+  const columns = [
+    { key:'todo',        label:'To Do',       color:'#8c7164' },
+    { key:'in-progress', label:'In Progress',  color:'#f97316' },
+    { key:'done',        label:'Done',         color:'#006b5f' }
+  ];
 
   if (loading) return <div className="project-detail animate-fade-in"><div className="skeleton" style={{width:300,height:40,marginBottom:32}}/><div style={{display:'flex',gap:16}}>{[1,2,3].map(i=><div key={i} className="skeleton" style={{flex:1,height:400,borderRadius:16}}/>)}</div></div>;
   if (!project) return null;
@@ -155,7 +159,7 @@ function ProjectDetail() {
                 <div className="kanban-column-header"><div className="kanban-column-title"><span className="kanban-column-dot" style={{background:col.color}}/><span>{col.label}</span><span className="kanban-column-count">{colTasks.length}</span></div></div>
                 <div className="kanban-cards">
                   {colTasks.map(task => (
-                    <div key={task._id} className={`kanban-card glass-card ${isOverdue(task)?'kanban-card-overdue':''}`}>
+                    <div key={task._id} className={`kanban-card ${isOverdue(task)?'kanban-card-overdue':''}`}>
                       <div className="kanban-card-top"><span className={`badge badge-${task.priority}`}>{task.priority}</span><div className="kanban-card-actions"><button className="btn btn-ghost btn-sm" onClick={()=>openEditTask(task)} title="Edit"><HiOutlinePencil/></button><button className="btn btn-ghost btn-sm" onClick={()=>setShowDeleteConfirm(task._id)} title="Delete"><HiOutlineTrash/></button></div></div>
                       <h4 className="kanban-card-title">{task.title}</h4>
                       {task.description && <p className="kanban-card-desc">{task.description}</p>}
@@ -179,7 +183,7 @@ function ProjectDetail() {
           {project.members?.map(member => {
             const mu = member.user;
             return (
-              <div key={mu?._id||member._id} className="member-row glass-card">
+              <div key={mu?._id||member._id} className="member-row">
                 <div className="member-info"><div className="avatar" style={{background:getAvatarColor(mu?.name||'U')}}>{getInitials(mu?.name||'U')}</div><div className="member-details"><span className="member-name">{mu?.name}</span><span className="member-email">{mu?.email}</span></div></div>
                 <div className="member-actions"><span className={`badge badge-${member.role}`}>{member.role}</span>{isAdmin()&&member.role!=='admin'&&mu?._id!==user._id&&<button className="btn btn-ghost btn-sm" onClick={()=>handleRemoveMember(mu._id)} title="Remove"><HiOutlineUserRemove/></button>}</div>
               </div>

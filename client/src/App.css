@@ -1,5 +1,5 @@
 /* ============================================
-   App-level Styles
+   App-level Styles — Light Theme
    ============================================ */
 
 .app-loading {
@@ -10,15 +10,19 @@
   min-height: 100vh;
   gap: var(--space-4);
   color: var(--text-muted);
+  background: var(--background);
+  font-family: var(--font-heading);
+  font-size: var(--font-sm);
+  font-weight: 500;
 }
 
 .app-loading-spinner {
-  width: 40px;
-  height: 40px;
-  border: 3px solid var(--surface-700);
-  border-top-color: var(--primary-500);
+  width: 36px;
+  height: 36px;
+  border: 3px solid var(--outline-variant);
+  border-top-color: var(--primary);
   border-radius: 50%;
-  animation: spin 0.8s linear infinite;
+  animation: spin 0.7s linear infinite;
 }
 
 @keyframes spin {

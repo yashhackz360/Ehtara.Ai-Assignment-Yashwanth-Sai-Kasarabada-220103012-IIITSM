@@ -62,14 +62,16 @@ function Projects() {
           <h1 className="page-title">Projects</h1>
           <p className="page-subtitle">Manage and organize your team's work.</p>
         </div>
-        <button
-          className="btn btn-primary"
-          onClick={() => setShowModal(true)}
-          id="create-project-btn"
-        >
-          <HiOutlinePlus />
-          New Project
-        </button>
+        {projects.length > 0 && (
+          <button
+            className="btn btn-primary"
+            onClick={() => setShowModal(true)}
+            id="create-project-btn"
+          >
+            <HiOutlinePlus />
+            New Project
+          </button>
+        )}
       </div>
 
       {loading ? (
@@ -84,7 +86,7 @@ function Projects() {
             <Link
               to={`/projects/${project._id}`}
               key={project._id}
-              className="project-card glass-card"
+              className="project-card"
               style={{ animationDelay: `${idx * 0.05}s`, animation: 'fadeIn 0.4s ease-out both' }}
             >
               <div className="project-card-header">
@@ -113,7 +115,7 @@ function Projects() {
         </div>
       ) : (
         <div className="empty-state">
-          <div className="empty-state-icon">📁</div>
+          <div className="empty-state-icon"><HiOutlineFolder /></div>
           <h3 className="empty-state-title">No projects yet</h3>
           <p className="empty-state-desc">
             Create your first project to start organizing tasks.

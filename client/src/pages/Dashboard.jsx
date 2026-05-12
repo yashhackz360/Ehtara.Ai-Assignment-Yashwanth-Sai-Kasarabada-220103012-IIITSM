@@ -5,11 +5,10 @@ import api from '../api';
 import {
   HiOutlineFolder,
   HiOutlineClipboardList,
-  HiOutlineClock,
   HiOutlineCheckCircle,
-  HiOutlineExclamation,
-  HiOutlineLightningBolt,
   HiOutlineArrowRight,
+  HiOutlineFire,
+  HiOutlineSparkles,
 } from 'react-icons/hi';
 import './Dashboard.css';
 
@@ -35,9 +34,34 @@ function Dashboard() {
 
   const getGreeting = () => {
     const hour = new Date().getHours();
+    if (hour < 6) return 'Burning the midnight oil';
     if (hour < 12) return 'Good morning';
-    if (hour < 18) return 'Good afternoon';
-    return 'Good evening';
+    if (hour < 17) return 'Good afternoon';
+    if (hour < 21) return 'Good evening';
+    return 'Working late';
+  };
+
+  const getGreetingEmoji = () => {
+    const hour = new Date().getHours();
+    if (hour < 6) return '🌙';
+    if (hour < 12) return '🌅';
+    if (hour < 17) return '☀️';
+    if (hour < 21) return '🌇';
+    return '🌙';
+  };
+
+  const getMotivation = () => {
+    const hour = new Date().getHours();
+    const totalTasks = data?.stats?.totalTasks || 0;
+    const done = data?.stats?.done || 0;
+    const overdue = data?.stats?.overdue || 0;
+
+    if (totalTasks === 0) return "No active tasks. Create a new project to get started.";
+    if (overdue > 0) return `Attention: ${overdue} task${overdue > 1 ? 's are' : ' is'} overdue.`;
+    if (done > 0 && done === totalTasks) return "All tasks are complete. Excellent progress.";
+    if (hour < 12) return "Good morning. Here is your current task overview.";
+    if (hour < 17) return "Good afternoon. Here is your current task overview.";
+    return "Good evening. Review your end-of-day task status.";
   };
 
   const formatDate = (date) => {
@@ -74,12 +98,12 @@ function Dashboard() {
     return (
       <div className="dashboard animate-fade-in">
         <div className="dashboard-header">
-          <div className="skeleton" style={{ width: 300, height: 36 }} />
-          <div className="skeleton" style={{ width: 200, height: 20, marginTop: 8 }} />
+          <div className="skeleton" style={{ width: 350, height: 44 }} />
+          <div className="skeleton" style={{ width: 220, height: 20, marginTop: 8 }} />
         </div>
         <div className="stats-grid">
           {[1, 2, 3, 4].map((i) => (
-            <div key={i} className="skeleton" style={{ height: 120, borderRadius: 16 }} />
+            <div key={i} className="skeleton" style={{ height: 130, borderRadius: 16 }} />
           ))}
         </div>
       </div>
@@ -93,29 +117,29 @@ function Dashboard() {
       icon: HiOutlineFolder,
       label: 'Projects',
       value: stats.totalProjects || 0,
-      color: '#6366f1',
-      bg: 'rgba(99, 102, 241, 0.1)',
+      color: '#f97316',
+      bg: 'rgba(249, 115, 22, 0.12)',
     },
     {
       icon: HiOutlineClipboardList,
       label: 'Total Tasks',
       value: stats.totalTasks || 0,
-      color: '#06b6d4',
-      bg: 'rgba(6, 182, 212, 0.1)',
+      color: '#14b8a6',
+      bg: 'rgba(20, 184, 166, 0.12)',
     },
     {
       icon: HiOutlineCheckCircle,
       label: 'Completed',
       value: stats.done || 0,
       color: '#22c55e',
-      bg: 'rgba(34, 197, 94, 0.1)',
+      bg: 'rgba(34, 197, 94, 0.12)',
     },
     {
-      icon: HiOutlineExclamation,
+      icon: HiOutlineFire,
       label: 'Overdue',
       value: stats.overdue || 0,
-      color: '#ef4444',
-      bg: 'rgba(239, 68, 68, 0.1)',
+      color: '#f43f5e',
+      bg: 'rgba(244, 63, 94, 0.12)',
     },
   ];
 
@@ -125,14 +149,14 @@ function Dashboard() {
       <div className="dashboard-header">
         <div>
           <h1 className="dashboard-greeting">
-            {getGreeting()}, {user?.name?.split(' ')[0]} 👋
+            {getGreeting()}, {user?.name?.split(' ')[0]} {getGreetingEmoji()}
           </h1>
           <p className="dashboard-subtitle">
-            Here's what's happening with your projects today.
+            {getMotivation()}
           </p>
         </div>
         <Link to="/projects" className="btn btn-primary" id="dashboard-new-project">
-          <HiOutlineFolder />
+          <HiOutlineSparkles />
           View Projects
         </Link>
       </div>
@@ -142,7 +166,7 @@ function Dashboard() {
         {statCards.map((stat, i) => (
           <div
             key={stat.label}
-            className="stat-card glass-card"
+            className="stat-card"
             style={{ animationDelay: `${i * 0.1}s` }}
           >
             <div className="stat-icon" style={{ background: stat.bg, color: stat.color }}>
@@ -159,8 +183,8 @@ function Dashboard() {
       {/* Status Distribution */}
       {stats.totalTasks > 0 && (
         <div className="dashboard-section animate-fade-in" style={{ animationDelay: '0.2s' }}>
-          <h2 className="section-title">Task Distribution</h2>
-          <div className="distribution-card glass-card">
+          <h2 className="section-title">📊 Task Distribution</h2>
+          <div className="distribution-card">
             <div className="distribution-bar">
               {stats.todo > 0 && (
                 <div
@@ -190,11 +214,11 @@ function Dashboard() {
                 <span>To Do ({stats.todo})</span>
               </div>
               <div className="legend-item">
-                <span className="legend-dot" style={{ background: '#6366f1' }} />
+                <span className="legend-dot" style={{ background: '#f97316' }} />
                 <span>In Progress ({stats.inProgress})</span>
               </div>
               <div className="legend-item">
-                <span className="legend-dot" style={{ background: '#22c55e' }} />
+                <span className="legend-dot" style={{ background: '#14b8a6' }} />
                 <span>Done ({stats.done})</span>
               </div>
             </div>
@@ -207,15 +231,14 @@ function Dashboard() {
         {data?.overdueTasks?.length > 0 && (
           <div className="dashboard-section animate-fade-in" style={{ animationDelay: '0.3s' }}>
             <h2 className="section-title">
-              <HiOutlineExclamation style={{ color: 'var(--danger-400)' }} />
-              Overdue Tasks
+              🚨 Overdue — Needs Attention!
             </h2>
             <div className="task-list">
               {data.overdueTasks.slice(0, 5).map((task) => (
                 <Link
                   to={`/projects/${task.project?._id}`}
                   key={task._id}
-                  className="task-list-item glass-card"
+                  className="task-list-item"
                 >
                   <div className="task-list-info">
                     <span className="task-list-title">{task.title}</span>
@@ -237,15 +260,14 @@ function Dashboard() {
         {data?.dueSoon?.length > 0 && (
           <div className="dashboard-section animate-fade-in" style={{ animationDelay: '0.4s' }}>
             <h2 className="section-title">
-              <HiOutlineClock style={{ color: 'var(--warning-400)' }} />
-              Due Soon
+              ⏰ Coming Up Soon
             </h2>
             <div className="task-list">
               {data.dueSoon.slice(0, 5).map((task) => (
                 <Link
                   to={`/projects/${task.project?._id}`}
                   key={task._id}
-                  className="task-list-item glass-card"
+                  className="task-list-item"
                 >
                   <div className="task-list-info">
                     <span className="task-list-title">{task.title}</span>
@@ -269,8 +291,7 @@ function Dashboard() {
         <div className="dashboard-section animate-fade-in" style={{ animationDelay: '0.5s' }}>
           <div className="section-header">
             <h2 className="section-title">
-              <HiOutlineLightningBolt style={{ color: 'var(--primary-400)' }} />
-              Project Progress
+              🚀 Project Progress
             </h2>
             <Link to="/projects" className="btn btn-ghost btn-sm">
               View all <HiOutlineArrowRight />
@@ -281,7 +302,7 @@ function Dashboard() {
               <Link
                 to={`/projects/${project._id}`}
                 key={project._id}
-                className="project-summary-card glass-card"
+                className="project-summary-card"
               >
                 <div className="project-summary-header">
                   <div
@@ -311,14 +332,14 @@ function Dashboard() {
       {/* Empty State */}
       {!data?.projectSummaries?.length && !loading && (
         <div className="empty-state animate-fade-in">
-          <div className="empty-state-icon">📋</div>
-          <h3 className="empty-state-title">No projects yet</h3>
+          <div className="empty-state-icon">🎯</div>
+          <h3 className="empty-state-title">Welcome to TaskFlow!</h3>
           <p className="empty-state-desc">
-            Create your first project to start managing tasks and collaborating with your team.
+            Your workspace is ready. Create your first project to start collaborating with your team and tracking progress.
           </p>
-          <Link to="/projects" className="btn btn-primary" style={{ marginTop: 16 }}>
-            <HiOutlineFolder />
-            Create Project
+          <Link to="/projects" className="btn btn-primary" style={{ marginTop: 20 }}>
+            <HiOutlineSparkles />
+            Create Your First Project
           </Link>
         </div>
       )}
