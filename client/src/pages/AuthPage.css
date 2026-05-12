@@ -1,0 +1,199 @@
+/* ============================================
+   Auth Page
+   ============================================ */
+
+.auth-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-4);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Animated background orbs */
+.auth-bg {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.auth-bg-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.4;
+  animation: float 8s ease-in-out infinite;
+}
+
+.auth-bg-orb-1 {
+  width: 400px;
+  height: 400px;
+  background: var(--primary-600);
+  top: -100px;
+  right: -100px;
+  animation-delay: 0s;
+}
+
+.auth-bg-orb-2 {
+  width: 300px;
+  height: 300px;
+  background: var(--cyan-500);
+  bottom: -80px;
+  left: -80px;
+  animation-delay: 2s;
+}
+
+.auth-bg-orb-3 {
+  width: 200px;
+  height: 200px;
+  background: #8b5cf6;
+  top: 50%;
+  left: 50%;
+  animation-delay: 4s;
+}
+
+.auth-container {
+  width: 100%;
+  max-width: 420px;
+  background: rgba(15, 23, 42, 0.8);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-2xl);
+  padding: var(--space-10);
+  position: relative;
+  z-index: 1;
+}
+
+.auth-logo {
+  text-align: center;
+  margin-bottom: var(--space-8);
+}
+
+.auth-logo-icon {
+  width: 56px;
+  height: 56px;
+  background: linear-gradient(135deg, var(--primary-500), var(--primary-700));
+  border-radius: var(--radius-xl);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  margin: 0 auto var(--space-4);
+  box-shadow: 0 4px 16px rgba(99, 102, 241, 0.3);
+}
+
+.auth-logo-text {
+  font-size: var(--font-3xl);
+  font-weight: 800;
+  background: linear-gradient(135deg, var(--primary-300), var(--cyan-400));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: -0.03em;
+}
+
+.auth-subtitle {
+  color: var(--text-muted);
+  font-size: var(--font-sm);
+  margin-top: var(--space-2);
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.auth-input-group {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.auth-input-icon {
+  position: absolute;
+  left: var(--space-4);
+  color: var(--text-muted);
+  font-size: 1.1rem;
+  pointer-events: none;
+}
+
+.auth-input {
+  width: 100%;
+  padding: var(--space-4) var(--space-4) var(--space-4) 44px;
+  background: var(--bg-input);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  color: var(--text-primary);
+  font-size: var(--font-sm);
+  transition: all var(--transition-fast);
+  outline: none;
+}
+
+.auth-input:focus {
+  border-color: var(--primary-500);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+}
+
+.auth-input::placeholder {
+  color: var(--text-muted);
+}
+
+.auth-toggle-password {
+  position: absolute;
+  right: var(--space-3);
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: var(--space-2);
+  display: flex;
+  font-size: 1.1rem;
+  transition: color var(--transition-fast);
+}
+
+.auth-toggle-password:hover {
+  color: var(--text-primary);
+}
+
+.auth-submit {
+  width: 100%;
+  margin-top: var(--space-2);
+  position: relative;
+}
+
+.auth-spinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+  display: inline-block;
+}
+
+.auth-toggle {
+  text-align: center;
+  margin-top: var(--space-6);
+  color: var(--text-muted);
+  font-size: var(--font-sm);
+}
+
+.auth-toggle-btn {
+  background: transparent;
+  border: none;
+  color: var(--primary-400);
+  cursor: pointer;
+  font-weight: 600;
+  margin-left: var(--space-2);
+  font-size: var(--font-sm);
+  transition: color var(--transition-fast);
+}
+
+.auth-toggle-btn:hover {
+  color: var(--primary-300);
+}
