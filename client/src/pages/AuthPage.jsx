@@ -88,7 +88,7 @@ function AuthPage() {
         <div className="auth-card">
           {/* Welcome Header */}
           <div className="auth-brand" style={{ marginBottom: '24px' }}>
-            <h2 style={{ fontFamily: 'Outfit, sans-serif', fontSize: '24px', fontWeight: 800, color: '#ffffff', marginBottom: '4px' }}>
+            <h2 style={{ fontFamily: 'Outfit, sans-serif', fontSize: '24px', fontWeight: 800, color: '#1e293b', marginBottom: '4px' }}>
               {isLogin ? 'Welcome back' : 'Create an account'}
             </h2>
             <p className="auth-tagline" style={{ marginTop: 0, textAlign: 'left' }}>
